@@ -1,2 +1,1 @@
-# battleship
-You sunk my battleship!
+Battleship game for university assignment purposes.
