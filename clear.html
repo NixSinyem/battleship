@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<title>Battleship - Game Clear</title>
+    
+	<link rel="stylesheet" type="text/css" href="css/battleship.css">
+	<meta charset="utf-8"/>
+	<meta name="description" content="Battleships Project game clear page"/>
+	<meta name="author" content="Nicholas Richard Sinyem"/>
+	
+</head>
+
+<body>
+	
+	<div id='clear_heading'>
+		
+		<div id='title'>Game</div>
+		<div id='message'>Result</div>
+		<div id='stats'></div>
+	
+	</div>
+	
+	<div id="clear">
+	
+		<ul>
+			<li><a href="game.html">Single Player</a></li>
+			<li><a href="vsgame.html">Play against RNG</a></li>
+			<li><a href="index.html">Main Menu</a></li>
+		</ul>
+		
+		<audio autoplay controls loop>
+		  <source src="sound/background.mp3" type="audio/mp3">
+		  Your browser does not support the audio element.
+		</audio>
+			
+	</div>
+
+	<script>
+		function fill(){
+			var result = localStorage.result;
+			var name = localStorage.playerName;
+			var shots = localStorage.shots;
+			var time = localStorage.time;
+			
+			if(result === '1'){
+				document.getElementById('title').innerHTML = 'Game Clear!';
+				document.getElementById('message').innerHTML = 'Congratulations ' + name + '!';
+				document.getElementById('stats').innerHTML = 'You took ' + shots + ' shots in ' + time + ' seconds to win!'; 
+			}else if(result === '0'){
+				document.getElementById('title').innerHTML = 'Game Over!';
+				document.getElementById('message').innerHTML = 'What\'s your next stage?'; 
+			}else{
+				document.getElementById('title').innerHTML = 'Battleship!';
+				document.getElementById('message').innerHTML = 'What\'s your next stage?'; 
+			}
+			
+			localStorage.clear();
+		}
+	
+		window.onload = fill;
+	</script>			
+
+</body>
+
+</html>

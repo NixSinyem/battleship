@@ -1,13 +1,30 @@
+//Game Timer
+var secleft = 90;
+var downloadTimer = setInterval(function(){
+    secleft--;
+    document.getElementById("countdowntimer").innerHTML = 'Mission Time: ' + secleft + ' seconds';
+    if(secleft <= 0){
+        clearInterval(downloadTimer);
+		
+		console.log('Game Over!');
+			
+		localStorage.setItem('result', '0');
+			
+		alert('Time Up! Assault failed!');
+		location.href = 'clear.html';			
+    }
+},1000);
+
 // Object to represent player
 var player = {
-    shotCounter: 0,
+    shotCounter: 30,
 
     // Method to shoot at a guessed position.
     shootPosition: function(letter, number) {
-        this.shotCounter++;
-        document.getElementById('shotCounter').innerHTML = this.shotCounter + ' Shots!';
-        if (enemy.shootResponse(letter, number)) {
-            return true;
+        this.shotCounter--;
+        document.getElementById('shotCounter').innerHTML = ' Shots: ' + this.shotCounter;
+        if (enemy.shootResponse(letter, number)) {       
+			return true;
         } else {
             return false;
         }
@@ -36,8 +53,7 @@ var enemy = {
                         console.log('You sunk my destroyer!');
                         boardUI.appendMessage('You sunk my destroyer!');
                         this.numShips--;
-                        document.getElementById('shipsRemaining').innerHTML = this.numShips + ' ships Remaining!';
-						this.destroyerHP = 2;
+                        document.getElementById('shipsRemaining').innerHTML = 'Enemy suriving ships: ' + this.numShips;
                     }
                     break;
                 case 3: // Cruiser
@@ -46,8 +62,7 @@ var enemy = {
                         console.log('You sunk my cruiser!');
                         boardUI.appendMessage('You sunk my cruiser!');
                         this.numShips--;
-                        document.getElementById('shipsRemaining').innerHTML = this.numShips + ' ships Remaining!';
-						this.cruiserHP = 3;
+                        document.getElementById('shipsRemaining').innerHTML = 'Enemy suriving ships: ' + this.numShips;
                     }
                     break;
                 case 4: // Battleship
@@ -56,8 +71,7 @@ var enemy = {
                         console.log('You sunk my battleship!');
                         boardUI.appendMessage('You sunk my battleship!');
                         this.numShips--;
-                        document.getElementById('shipsRemaining').innerHTML = this.numShips + ' ships Remaining!';
-						this.battleshipHP = 4;
+                        document.getElementById('shipsRemaining').innerHTML = 'Enemy suriving ships: ' + this.numShips;
                     }
                     break;
                 case 5: // Carrier
@@ -66,8 +80,7 @@ var enemy = {
                         console.log('You sunk my carrier!');
                         boardUI.appendMessage('You sunk my carrier!');
                         this.numShips--;
-                        document.getElementById('shipsRemaining').innerHTML = this.numShips + ' ships Remaining!';
-						this.carrierHP = 5;
+                        document.getElementById('shipsRemaining').innerHTML = 'Enemy suriving ships: ' + this.numShips;
                     }
                     break;
             }
@@ -91,13 +104,13 @@ var enemy = {
         if (this.numShips === 0) {
 			console.log('Congratulations, you won the game!');
             console.log('It only took you ' + player.shotCounter + ' shots!');
-			boardUI.appendMessage('Congratulations!<br>It only took you ' + player.shotCounter + ' shots to win!');	
-			document.getElementById('shipsRemaining').innerHTML = " "; //'Ships Remaining: ' + this.numShips;
-			document.getElementById('shotCounter').innerHTML = " "; //'Shots: ' + player.shotCounter;		
 			
-			if (confirm('Congratulations, you won the game!\nIt only took you ' + player.shotCounter + ' shots!\nClick OK to restart game.\nCancel to view stats.')) {
-				location.reload();
-			} 
+			localStorage.setItem('result', '1');
+			localStorage.setItem('shots', (30 - player.shotCounter));
+			localStorage.setItem('time', (90 - secleft));
+			
+			alert('Congratulations, you won the game!');
+			location.href = 'clear.html';
         }
         return true;
     }
@@ -236,11 +249,32 @@ var boardUI = {
         function createAnonFunction(i, j) {
             var anonFcn = function() {
                 if (player.shootPosition(i, j)) {
-                    $(this).css('background-color', 'red');
+                    $(this).css('background-color', 'red'); 	
+					var sound = document.getElementById("audioHit");
+					sound.play();
+						if((player.shotCounter == 0) && (enemy.numShips > 0)){
+							console.log('Game Over!');
+								
+							localStorage.setItem('result', '0');
+								
+							alert('Out of Ammo! Assault failed!');
+							location.href = 'clear.html';				
+						} 					
                 } else {
                     $(this).css('background-color', 'gray');
+					var sound = document.getElementById("audioMiss");
+					sound.play();	
+						if((player.shotCounter == 0) && (enemy.numShips > 0)){
+							console.log('Game Over!');
+								
+							localStorage.setItem('result', '0');
+								
+							alert('Out of Ammo! Assault failed!');
+							location.href = 'clear.html';				
+						}					
                 }
             };
+			
             return anonFcn;
         }
 
@@ -254,6 +288,23 @@ var boardUI = {
     },
 };
 
-$(document).ready(function() {
-    boardUI.createClickFire();
-});
+window.onload = init;
+
+
+function init(){
+	
+	var name = prompt('Please enter your name: ');
+	
+	if (name === "") {
+		var defaultName = 'Player';
+		localStorage.setItem('playerName', defaultName);
+	} else if (name) {
+		localStorage.setItem('playerName', name);
+	} else {
+		var defaultName = 'Player';
+		localStorage.setItem('playerName', defaultName);
+	}
+	
+	boardUI.createClickFire();
+		
+};

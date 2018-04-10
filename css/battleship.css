@@ -1,5 +1,5 @@
-/*Added new font face for texts*/
 /*
+Added new font face for texts
 Added on 10:35pm, 2.4.2018
 Author: Nicholas Richard
 */
@@ -12,22 +12,41 @@ Author: Nicholas Richard
 body {
     font-family: sans-serif;
     background-color: #223E4A;  /* Dark Slate Blue Background */
-    color: white;    /* Light Blue Text Color #EBFFFF*/
+    color: white;    
     text-shadow: 2px 2px 4px #111111;
 }
 
 /*CSS for game.html*/
 /*Original code*/
-.boardCell {
-    background-color: #0077BE;
-    width: 50px;
-    height: 50px;
-    box-shadow: 0px 0px 0px 1px #00BEA6 inset;
-    float: left;
-    cursor: pointer;
+#board{
+    position: relative;
+    background-color: #223E4A;
+    height: 400px; /*400*/
+    width: 400px; /*400*/	
+	margin: 0 auto;
 }
 
-.boardCell:hover {
+#board>.boardCell{
+    float: left;	
+}
+
+#board>.boardCell, #enemyBoard>.boardCell, #playerBoard>.boardCell {
+	background-color: #0077BE;
+    width: 50px; /*50*/
+    height: 50px; /*50*/
+    box-shadow: 0px 0px 0px 1px #00BEA6 inset;
+}
+
+#board>.boardCell, #enemyBoard>.boardCell{
+	cursor: crosshair;	
+}
+
+#enemyBoard>.boardCell {
+    float: left;
+    /* TODO: change curso to custom crosshair */cursor: crosshair;
+}
+
+#enemyBoard>.boardCell:hover, #board>.boardCell:hover  {
     background-color: #005F98;
 }
 
@@ -58,27 +77,58 @@ body {
     color: white;
 }
 
-#textDisplay {
+#textDisplay{
     height: 125px;
     width: 600px;
     margin-right: auto;
     margin-left: auto;
-	/* Changed to accomodate audio player and back button */
+	/*Changed to accomodate audio player and back button */
 	margin-bottom: 75px;
     padding-top: 10px;
     padding-left: 10px;
     background-color: rgba(0,0,0,0.2);
 }
 
-#enemyBoard {
+#enemyBoard, #playerBoard{
     position: relative;
     background-color: #223E4A;
-    height: 400px;
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    height: 400px; /*400*/
+    width: 400px; /*400*/
 }
 
+#enemyBoard{
+    float: left;
+	margin-left: 10em;
+    /*margin-right: auto;*/
+}
+
+/*Added player's fleet to implement pseudo-AI */
+/*
+Added on 6/4/2018 12:57pm
+Author: Nicholas Richard
+*/
+#playerBoard {
+    float: right;
+	/*margin-left: auto;*/
+    margin-right: 10em;
+	bottom: 1.25em;
+}
+
+
+#playerBoard>.boardCell {
+    float: right;
+}
+
+#yourShipsRemaining{
+	position: relative;
+	bottom: 1em;
+	right: 1em;
+	float:right;
+}
+
+#notBoard{
+	clear: both;
+}
 
 /* 
 CSS for general links, index.html and disclaimer.html
@@ -103,7 +153,7 @@ a:active{
 	color: blue;
 }
 
-#index{
+#index, #select, #clear, #clear_heading{
 	font-size:30px;
 	text-align:center;
 	font-family: shipwreck, Arial, sans-serif;
@@ -113,12 +163,12 @@ a:active{
 	border: 1px solid black;
 }
 
-#index>ul{
+#index>ul, #select>ul, #clear>ul{
 
 	list-style-type:none;
 }
 
-#index>ul>li{
+#index>ul>li, #disclaimer>ul>li, #select>ul>li, #clear>ul>li{
 
 	padding:1%;
 }
@@ -133,10 +183,6 @@ h1{
 {
 	font-size:26px;
 	list-style-type: square;
-}
-
-#disclaimer>ul>li{
-	padding:1%
 }
 
 #disclaimer>ul>li>a:link{
@@ -172,7 +218,7 @@ Author: Wong Xiu Jie
 }
 
 /*
-CSS for game.html
+CSS for web pages containing the game
 Added new on 3/4/2018 2:35pm
 Author: Nicholas Richard
 */
@@ -195,4 +241,40 @@ Author: Nicholas Richard
 
 audio{
 	float: right;
+}
+
+#select>audio{
+	position: relative;
+	top: 11.5em;
+}
+
+/*
+CSS for tansitioning pages of the game
+Added new on 7/4/2018 8:53pm
+Author: Nicholas Richard
+*/
+#select>ul{
+	position: relative;
+	top: 3.5em;
+}
+
+#select>#back{
+	float:left;
+	position: relative;
+	top: 12em;
+}
+
+#clear{
+	position: relative;
+	top: 3em;
+}
+
+#clear>audio{
+	position: relative;
+	top: 4em;
+}
+
+#clear_heading>#title{
+	margin-top: 1.5em;
+	margin-bottom: 15px;
 }
