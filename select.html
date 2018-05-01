@@ -19,18 +19,20 @@
 		<h1>Select a stage</h1>
 
 		<ul>
-			<li><a href="game.html">Single Player</a></li>
-			<li><a href="vsgame.html">Play against RNG</a></li>
+			<li><a id="single">Single Player</a></li>
+			<li><a id="vs">Play against RNG</a></li>
 		</ul>
 		
-		<audio autoplay controls loop>
-		  <source src="sound/background.mp3" type="audio/mp3">
-		  Your browser does not support the audio element.
-		</audio>
+		<audio id="music" autoplay loop>
+			<source src="sound/background.mp3" type="audio/mp3">
+			Your browser does not support the audio element.
+		</audio>	
 		
 		<span id="back"><a href="index.html" title="Click to go back to main menu">Back</a></span>	
 		
 	</div>			
 
+	<script src="script/select.js"></script>			
+	
 </body>
 </html>

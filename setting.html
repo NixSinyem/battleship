@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<title>Battleship</title>
+    
+	<link rel="stylesheet" type="text/css" href="css/battleship.css">
+	<meta charset="utf-8"/>
+	<meta name="description" content="Battleships Project settings page"/>
+	<meta name="author" content="Nicholas Richard"/>
+	
+</head>
+
+<body>
+
+	<div id="setting">
+			
+		<h1>Settings</h1>
+		
+		<ul id="storage">
+			<li>The settings rely on web storage.</li>
+			<li>Please ensure that your browser supports them.</li>
+		</ul>
+		
+		<ul>
+			<li><span class="opt"><a id="diff">Difficulty</a></span></li>
+			<li><span class="opt"><a id="music">Music</a></span></li>
+			<li><span class="opt"><a id="sound">Sound</a></span></li>
+			<li><span class="opt"><a id="lrecord">Reset Single Game Record</a></span></li>
+			<li><span class="opt"><a id="lvsrecord">Reset VS Game Record</a></span></li>
+		</ul>
+
+		<span id="back"><a href="index.html" title="Click to go back to main menu">Back</a></span>
+	
+	</div>	
+
+	<audio id="bgm" autoplay loop>
+		<source src="sound/background.mp3" type="audio/mp3">
+		Your browser does not support the audio element.
+	</audio>		
+
+	<script src="script/setting.js"></script>
+	
+</body>
+</html>

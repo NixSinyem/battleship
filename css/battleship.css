@@ -21,8 +21,8 @@ body {
 #board{
     position: relative;
     background-color: #223E4A;
-    height: 400px; /*400*/
-    width: 400px; /*400*/	
+    height: 25em; /*400px*/
+    width: 25em; /*400px*/	
 	margin: 0 auto;
 }
 
@@ -32,8 +32,8 @@ body {
 
 #board>.boardCell, #enemyBoard>.boardCell, #playerBoard>.boardCell {
 	background-color: #0077BE;
-    width: 50px; /*50*/
-    height: 50px; /*50*/
+    width: 3.1em; /*50px*/
+    height: 3.1em; /*50px*/
     box-shadow: 0px 0px 0px 1px #00BEA6 inset;
 }
 
@@ -52,8 +52,8 @@ body {
 
 .numberLabel {
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 3.1em; /*50px*/
+    height: 3.1em; /*50px*/
     float: left;
 }
 
@@ -65,8 +65,8 @@ body {
 
 .letterLabel {
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 3.1em; /*50px*/
+    height: 3.1em; /*50px*/
     float: left;
 }
 
@@ -92,14 +92,13 @@ body {
 #enemyBoard, #playerBoard{
     position: relative;
     background-color: #223E4A;
-    height: 400px; /*400*/
-    width: 400px; /*400*/
+    height: 25em; /*400px*/
+    width: 25em; /*400px*/
 }
 
 #enemyBoard{
     float: left;
 	margin-left: 10em;
-    /*margin-right: auto;*/
 }
 
 /*Added player's fleet to implement pseudo-AI */
@@ -109,8 +108,8 @@ Author: Nicholas Richard
 */
 #playerBoard {
     float: right;
-	/*margin-left: auto;*/
     margin-right: 10em;
+	position: relative;
 	bottom: 1.25em;
 }
 
@@ -140,7 +139,6 @@ a:link{
 }
 
 a:hover{
-	color:blue;	
     text-shadow: 2px 2px 4px #0eb5f7;
 }
 
@@ -153,7 +151,7 @@ a:active{
 	color: blue;
 }
 
-#index, #select, #clear, #clear_heading{
+#index, #setting, #select, #clear, #clear_heading{
 	font-size:30px;
 	text-align:center;
 	font-family: shipwreck, Arial, sans-serif;
@@ -163,12 +161,12 @@ a:active{
 	border: 1px solid black;
 }
 
-#index>ul, #select>ul, #clear>ul{
+#index>ul, #select>ul, #clear>ul, #setting>ul{
 
 	list-style-type:none;
 }
 
-#index>ul>li, #disclaimer>ul>li, #select>ul>li, #clear>ul>li{
+#index>ul>li, #disclaimer>ul>li, #select>ul>li, #clear>ul>li, #setting>ul>li{
 
 	padding:1%;
 }
@@ -179,24 +177,12 @@ h1{
 	font-family: shipwreck, Arial, sans-serif;
 }
 
-#disclaimer>ul, #instruction>ul
-{
+#disclaimer>ul, #instruction>ul{
 	font-size:26px;
 	list-style-type: square;
 }
 
 #disclaimer>ul>li>a:link{
-	text-decoration: underline;
-}
-
-#back{
-	font-size: 28px;
-	padding: 1%;
-	font-family: shipwreck, Arial, sans-serif;
-	font-weight: bold;
-}
-
-#back>a:link{
 	text-decoration: underline;
 }
 
@@ -226,19 +212,6 @@ Author: Nicholas Richard
 	font-family: shipwreck, Arial, sans-serif;
 }
 
-#gameback{
-	margin-top: 100px;
-    margin-right: auto;
-    margin-left: auto;
-	font-size: 28px;
-	padding: 1%;
-	font-weight: bold;	
-}
-
-#gameback>a:link{
-	text-decoration: underline;
-}
-
 audio{
 	float: right;
 }
@@ -258,10 +231,15 @@ Author: Nicholas Richard
 	top: 3.5em;
 }
 
-#select>#back{
-	float:left;
-	position: relative;
-	top: 12em;
+#setting>#back, #select>#back, #disclaimer>#back, #instruction>#back, .opt{
+	font-size: 28px;
+	padding: 1%;
+	font-family: shipwreck, Arial, sans-serif;
+	font-weight: bold;
+}
+
+#setting>#back{
+	float: left;
 }
 
 #clear{
@@ -277,4 +255,29 @@ Author: Nicholas Richard
 #clear_heading>#title{
 	margin-top: 1.5em;
 	margin-bottom: 15px;
+}
+
+#storage{
+	font-family: sans-serif;
+	font-size: 26px;
+	padding: 1%;
+	list-style-type: none;
+	text-align: center;
+}
+
+#setting>#back, #select>#back, #disclaimer>back{
+	position: relative;
+}
+
+#disclaimer>#back{
+	top: 2.5em;	
+}
+
+#setting>#back{
+	top: 3.5em;
+}
+
+#select>#back{
+	top: 12em;
+	float: left;
 }

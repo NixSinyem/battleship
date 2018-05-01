@@ -1,23 +1,3 @@
-//Game Timer
-function gameTimer(sec){
-
-	downloadTimer = setInterval(function(){
-    sec--;
-    document.getElementById("countdowntimer").innerHTML = 'Mission Time: ' + sec + ' seconds';
-    if(sec <= 0){
-        clearInterval(downloadTimer);
-		
-		console.log('Game Over!');
-			
-		sessionStorage.setItem('result', '2');
-		sessionStorage.setItem('shots', (30 - player.shotCounter));
-			
-		alert('Time Up! Assault failed!');
-		location.href = 'clear.html';			
-    }
-},1000);
-}
-
 //Restart Button
 document.getElementById("restartbutton").addEventListener("click", restartgame);
 function restartgame(){
@@ -25,31 +5,6 @@ function restartgame(){
 	location.reload();
 }
 
-//Pause Button
-document.getElementById("pausebutton").addEventListener("click",pausegame);
-function pausegame(){
-	
-	sessionStorage.setItem('pause', '1');
-	
-	clearTimeout(downloadTimer);
-	
-	console.log('sS set to pause');	
-	
-	var string = document.getElementById("countdowntimer").innerHTML; 
-    var pausedTime = parseInt(string.slice(14, 16).trim());
-	
-	sessionStorage.setItem('timeleft', pausedTime);
-}
-
-//Resume Button
-document.getElementById("resumebutton").addEventListener("click",resumegame);
-function resumegame(){
-	
-	sessionStorage.setItem('pause', '0');	
-	console.log('sS set to resume');	
-	
-	gameTimer(sessionStorage.timeleft);
-}
 
 // Object to represent player
 var player = {
@@ -64,9 +19,7 @@ var player = {
     // Method to shoot at a guessed position.
     shootPosition:function(letter, number){
 
-		if(sessionStorage.pause == '0'){
-			this.shotCounter--;
-		}
+		this.shotCounter++;
 		
         document.getElementById('shotCounter').innerHTML = ' Shots: ' + this.shotCounter;
 		if (enemy.shootResponse(letter, number)) {
@@ -81,9 +34,7 @@ var player = {
 				}
 			}
 			
-			if(sessionStorage.pause == '0'){
-				enemy.shootPosition();
-			}
+			enemy.shootPosition();
 			
 			return true;
 		} else {
@@ -98,9 +49,7 @@ var player = {
 				}
 			}
 			
-			if(sessionStorage.pause == '0'){
-				enemy.shootPosition();
-			}
+			enemy.shootPosition();
 			
 			return false;
 		}
@@ -238,30 +187,22 @@ var enemy = {
         } else if(shotValue == -2 ){
 			console.log('You\'ve already shot here! Please select another square!');
 			boardUI.setMessage('You\'ve already shot here! Please select another square!');	
-			if(sessionStorage.pause == '0'){
-				player.score -= 100;
-			}			
+			player.score -= 100;			
 			return false;
 		}else if (shotValue == -1) {
             console.log('You\'ve already shot an enemy here! Please select another square!');
 			boardUI.setMessage('You\'ve already shot an enemy here! Please select another square!');
-			if(sessionStorage.pause == '0'){
-				player.score -= 100;
-			}	
+			player.score -= 100;
             return true;
         } else {
             console.log('Miss!');
             boardUI.setMessage('Doh! You missed. Shoot again!');
 			this.board[y][x] = -2;
-			if(sessionStorage.pause == '0'){
-				player.score -= 50;
-			}
+			player.score -= 50;
             return false;
         }
 		
-		if(sessionStorage.pause == '0'){
-			player.score += 100;
-		}
+		player.score += 100;
 		
         // When number of ships is 0, game is over.
         if (this.numShips === 0) {
@@ -283,7 +224,7 @@ var enemy = {
 			}
 			
 			sessionStorage.setItem('result', '1');
-			sessionStorage.setItem('shots', (25 - player.shotCounter));	
+			sessionStorage.setItem('shots', (player.shotCounter));	
 			sessionStorage.setItem('VSsrecord', player.score);	
 			sessionStorage.setItem('battle', '2');
 			alert('Congratulations, you won the game!');
@@ -587,46 +528,20 @@ var boardUI = {
         function createAnonFunction(i, j) {
             var anonFcn = function() {
                 if (player.shootPosition(i, j)) {
-					if(sessionStorage.pause == '0'){
-						$(this).css('background-color', 'red');
-						var sound = document.getElementById("audiot");
-						if(localStorage.sound == '1' || localStorage.sound == undefined)
-						{
-							sound.play();	
-						} 			
-						if((player.shotCounter == 0) && (enemy.numShips > 0)){
-							console.log('Game Over!');
-					
-							sessionStorage.setItem('result', '3');
-							sessionStorage.setItem('shots', (25 - player.shotCounter));
-							sessionStorage.setItem('battle', '2');
-							alert('Out of Ammo! Assault failed!');
-							location.href = 'clear.html';				
-						}
-					}else{
-						boardUI.textOutput.innerHTML = 'Resume the game to continue the battle.';
-					}
-                } else {
-					if(sessionStorage.pause == '0'){
-						$(this).css('background-color', 'gray');
-						var sound = document.getElementById("audioe");
-						if(localStorage.sound == '1' || localStorage.sound == undefined)
-						{
-							sound.play();	
-						}		
-						if((player.shotCounter == 0) && (enemy.numShips > 0)){
-							console.log('Game Over!');
-					
-							sessionStorage.setItem('result', '3');
-							sessionStorage.setItem('shots', (25 - player.shotCounter));
-							sessionStorage.setItem('battle', '2');
-							alert('Out of Ammo! Assault failed!');
-							location.href = 'clear.html';				
-						} 	
-					}else{
-						boardUI.textOutput.innerHTML = 'Resume the game to continue the battle.';
-					}
-                }	
+					$(this).css('background-color', 'red');
+					var sound = document.getElementById("audiot");
+					if(localStorage.sound == '1' || localStorage.sound == undefined)
+					{
+						sound.play();	
+					} 
+				} else {
+					$(this).css('background-color', 'gray');
+					var sound = document.getElementById("audioe");
+					if(localStorage.sound == '1' || localStorage.sound == undefined)
+					{
+						sound.play();	
+					}	
+				}		
             };			
 		
             return anonFcn;
@@ -663,8 +578,6 @@ function init(){
 		}
 	}
 	
-	sessionStorage.setItem('pause', '0');
-	
 	var name = prompt('Please enter your name: ');
 	
 	if (name === "") {
@@ -677,14 +590,4 @@ function init(){
 	
 	boardUI.createClickFire();
 
-	if(localStorage.diff == null || localStorage.diff == '2')
-	{	
-		var gameTime = 60;
-		player.shotCounter = 30;
-		gameTimer(gameTime);
-	}else{
-		var gameTime = 45;
-		player.shotCounter = 25;
-		gameTimer(gameTime);		
-	}	
 };
